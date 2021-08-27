@@ -6,21 +6,29 @@ class PolyTreeNode
         @value = value
     end
 
+    def parent=(node)
+        #if node.children.include?(self)
+        @parent.children.delete(self) unless @parent.nil?
+        @parent = node
+        unless node.nil? || node.children.include?(self)
+            node.children << self 
+        end
+    end
+
+    
 
 
 
+   
+   
+   
+   
+   
+   
+   
+   
+   
 
-
-   
-   
-   
-   
-   
-   
-   
-   
-   
-    private
     attr_reader :parent, :children, :value
 
 
