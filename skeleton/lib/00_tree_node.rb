@@ -40,18 +40,16 @@ class PolyTreeNode
 
     def bfs(target_value)
         queue = [self]
-
         until queue.empty?
             first = queue.shift
             return first if first.value == target_value
             queue += first.children
         end
-        
         nil
     end
 
     def inspect
-        { value: @value }.inspect
+        { value: @value, children: @children }.inspect
     end
             
    
