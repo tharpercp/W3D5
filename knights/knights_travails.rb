@@ -11,7 +11,7 @@ class KnightPathFinder
         moves = [[2, 1],[-2,1],[2,-1],[-2,-1],[1,2],[-1,2],[1,-2],[-1,-2]]
         moves.each do |move|
             xa, ya = move
-            if x + xa <= 7 && y + ya <= 7 && x + xa >= 0 && y + ya >= 0
+            if x + xa <= 7 && y + ya <= 7 && x + xa >= 0 && y + ya >= 0 # use all to see whether they're all between 0 and 7
                 new_positions << [x + xa, y + ya]
             end
         end 
@@ -43,11 +43,6 @@ class KnightPathFinder
         
     
 
-        # until @considered_positions.empty?
-        #     first = @considered_positions.shift
-        #     self.new_move_positions(first)
-        # end
-
     def new_move_positions(position)
         new_positions = KnightPathFinder.valid_moves(position).select do |move|
             !@considered_positions.include?(move)
@@ -59,10 +54,27 @@ class KnightPathFinder
 
     end
 
-    def find_path
+    def find_path(end_pos)
+        end_node = @root_node.dfs(end_pos)
+        return trace_path_back(end_node)
+    end
+
+    def trace_path_back(end_node)
+
+        path = [end_node.value]
+
+        current_node = end_node
+
+        until current_node == @root_node
+            path.unshift(current_node.parent.value)
+            current_node = current_node.parent
+        end
+
+        path
+
     end
 
 end
 
 test = KnightPathFinder.new([0,0])
-p test.root_node
+p test.find_path([6,2])
